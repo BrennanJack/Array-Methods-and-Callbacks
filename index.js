@@ -42,7 +42,7 @@ Use the higher-order function called getYears to do the following:
 3. Return an array called years containing all of the years in the getFinals data set*/
 
 function getYears(data, getfinalscb) {
-    const finals = getfinalscb(data);
+    const finals = getfinalscb();
     const years = finals.map(item => item.Year);
     return years;
 }
@@ -57,7 +57,7 @@ Use the higher-order function getWinners to do the following:
 4. Returns the names of all winning countries in an array called `winners` */ 
 
 function getWinners(data, getfinalscb) {
-    const finals = getfinalscb(data);
+    const finals = getfinalscb();
     const winners = [];
     finals.forEach(function(item){
         if (item['Home Team Goals'] > item['Away Team Goals']){
@@ -70,7 +70,6 @@ function getWinners(data, getfinalscb) {
 }
 
 
-
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 5: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
 Use the higher-order function getWinnersByYear to do the following:
 1. Receive an array
@@ -81,11 +80,15 @@ Use the higher-order function getWinnersByYear to do the following:
 hint: the strings returned need to exactly match the string in step 4.
  */
 
-function getWinnersByYear(/* code here */) {
-    /* code here */
+function getWinnersByYear(data, getyearscb, getwinnerscb) {
+    const years = getyearscb();
+    const winner = getwinnerscb(); 
+    const winnersByYear = [];
+    for(let i = 0; i < years.length && winner.length; i++){
+        winnersByYear.push(`In ${years[i]}, ${winner[i]} won the world cup!`)
+    }
+    return winnersByYear;
 }
-
-
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 6: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 Use the higher order function getAverageGoals to do the following: 
@@ -97,11 +100,13 @@ Use the higher order function getAverageGoals to do the following:
  Example of invocation: getAverageGoals(getFinals(fifaData));
 */
 
-function getAverageGoals(/* code here */) {
-   /* code here */
+function getAverageGoals(getfinalscb, data) {
+   const finals= getfinalscb(data);
+   const awayGoals = finals.reduce((acc, item) => acc + item['Away Team Goals'], 0);
+   const homeGoals = finals.reduce((acc, item) => acc + item['Home Team Goals'], 0);
+   const averageGoals = (awayGoals + homeGoals) / finals.length;
+   return averageGoals.toFixed(2);
 }
-
-
 
 
 /// 🥅 STRETCH 🥅 ///
